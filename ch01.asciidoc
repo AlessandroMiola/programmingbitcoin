@@ -531,10 +531,7 @@ One last thing that we need to take care of before we leave this chapter is the 
 For example a^-3^ needs to be a Finite Field element, but the current code does not take care of this case.
 We want, for example something like this to work:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example7]
-----
 
 Unfortunately, the way we've defined `__pow__` simply doesn't handle negative exponents as the second parameter of the built-in Python function `pow` is required to be positive.
 
