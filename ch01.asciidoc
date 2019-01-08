@@ -115,10 +115,8 @@ Naturally, we'll name the class `FieldElement`.
 The class represents an element in a field F~prime~.
 The bare bones of the class look like this:
 
-[source,python]
-----
 include::code-ch01/ecc.py[tag=source1]
-----
+
 <1> We first check that `num` is between `0` and `prime-1` inclusive.
 If not, we have an invalid Field Element and we raise a `ValueError` which is what we should raise when we get an inappropriate value.
 <2> The rest of the `__init__` method assigns the initialization values to the object.
@@ -127,10 +125,7 @@ This is only true when the `num` and `prime` properties are equal.
 
 What we've defined already allows us to do this:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example1]
-----
 
 Python allows us to override the `==` operator on `FieldElement` with the `__eq__` method, which is something we'll be taking advantage of going forward.
 
@@ -150,7 +145,7 @@ Modulo arithmetic is something you probably learned when you first learned divis
 Remember problems like Figure 1-1?
 
 .Long Division Example 1
-image::longdivision.png[Long Division Example 1]
+image::images/longdivision.png[Long Division Example 1]
 
 Whenever the division wasn't even, there was something called the "remainder" which is the leftover from the actual division.
 We define modulo in the same way.
@@ -161,7 +156,7 @@ We use the operator *%* for "modulo".
 Figure 1-2 shows another example.
 
 .Long Division Example 2
-image::longdivision-2.png[Long Division Example 2]
+image::images/longdivision-2.png[Long Division Example 2]
 
 Formally speaking, the modulo operation is the remainder after division of one number by another.
 Let's look at another example with larger numbers:
@@ -177,7 +172,7 @@ What hour will it be 47 hours from now?
 The answer is 2 o'clock because (3 + 47) % 12 = 2 (see Figure 1-3)
 
 .Clock going forward 47 hours
-image::clock.jpg[Clock]
+image::images/clock.jpg[Clock]
 
 We can also see this as "wrapping around" in the sense that you go past zero every time we move ahead 12 hours.
 
@@ -223,17 +218,11 @@ Most operations in Finite Fields use the modulo operator in some capacity.
 Python uses the `%` operator for modulo arithmetic.
 Here is how the modulo operator is used:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example2]
-----
 
 We can also use the modulo operator on negative numbers like this:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example3]
-----
 
 === Finite Field Addition and Subtraction
 
@@ -312,19 +301,14 @@ include::code-ch01/answers.py[tag=exercise2,indent=0]
 In the class `FieldElement` we can now define `__add__` and `__sub__` methods.
 The idea of these methods is that we want something like this to work:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example4]
-----
 
 In Python we can define what addition (or + operator) means for our class with the `__add__` method.
 So how do we do this?
 We combine what we learned above with modulo arithmetic and create a new method of the class `FieldElement` like so:
 
-[source,python]
-----
 include::code-ch01/ecc.py[tag=source2]
-----
+
 <1> We have to ensure that the elements are from the same Finite Field, otherwise this calculation doesn't have any meaning.
 <2> Addition in a Finite Field is defined with the modulo operator, as explained above.
 <3> We have to return an instance of the class, which we can conveniently access with `self.__class__`.
@@ -395,10 +379,7 @@ If the order of the set was composite number, multiplying the set by one of the 
 Now that we understand what multiplication should be in `FieldElement`, we want to define the `__mul__` method which overrides the `*` operator.
 We want this to work:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example5]
-----
 
 As we did with addition and subtraction above, the next exercise is to make multiplication work for our class by defining the `__mul__` method.
 
@@ -410,10 +391,7 @@ We need to define the exponentiation for `FieldElement`, which in Python can be 
 The difference here is that the exponent is *not* a `FieldElement`, so has to be treated a bit differently.
 We want something like this to work:
 
-[source,python]
-----
 include::code-ch01/examples.py[tag=example6]
-----
 
 Note that because the exponent is an integer, instead of another instance of `FieldElement`, the method receives the variable `exponent` as an integer.
 We can code it this way.
